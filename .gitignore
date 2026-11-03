@@ -1,0 +1,18 @@
+notes.txt
+
+# Python
+venv/
+__pycache__/
+*.pyc
+.env
+
+# React
+node_modules/
+dist/
+
+# IDE
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
