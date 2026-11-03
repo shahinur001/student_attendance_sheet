@@ -21,6 +21,8 @@ if config.config_file_name is not None:
 from app.core.config import settings
 from app.database.base import Base
 
+from app import models
+
 target_metadata = Base.metadata
 
 config.set_main_option(

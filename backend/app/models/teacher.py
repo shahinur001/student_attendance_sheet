@@ -24,7 +24,7 @@ class Teacher(Base):
     )
 
     full_name: Mapped[str] = mapped_column(
-        String(50), nullable=False
+        String(150), nullable=False
     )
 
     designation: Mapped[str | None] = mapped_column(

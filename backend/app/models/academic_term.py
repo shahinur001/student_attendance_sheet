@@ -1,12 +1,24 @@
 from datetime import date
 
-from sqlalchemy import String, Date, Boolean
+from sqlalchemy import String, Date, Boolean, CheckConstraint, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.base import Base
 
 class AcademicTerm(Base):
     __tablename__ = "academic_terms"
+
+    __table_args__ = (
+        UniqueConstraint(
+            "name",
+            "academic_year",
+            name="uq_academic_term_name_year"
+        ),
+        CheckConstraint(
+            "end_date >= start_date",
+            name="check_academic_term_dates"
+        ),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
 
