@@ -5,6 +5,9 @@ venv/
 __pycache__/
 *.pyc
 .env
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
 
 # React
 node_modules/

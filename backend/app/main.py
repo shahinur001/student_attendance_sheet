@@ -1,7 +1,26 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+from app.core.config import settings
+
+print(settings.APP_NAME)
+
+app = FastAPI(
+    title=settings.APP_NAME,
+    version=settings.APP_VERSION,
+    debug=settings.DEBUG
+)
 
 @app.get("/")
-def home():
-    return {"message": "Student Attendance System API is running!"}
+def root():
+    return{
+        "message": "Student Attendance Management System API",
+        "version": settings.APP_VERSION,
+        "status": "running"
+    }
+
+
+@app.get("/health")
+def health():
+    return{
+        "status": "healthy"
+    }
