@@ -9,7 +9,7 @@ from sqlalchemy import (
     UniqueConstraint,
     func
 )
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.base import Base
 
@@ -52,4 +52,12 @@ class AttendanceSession(Base):
         DateTime(timezone=True),
         server_default=func.now(),
         nullable=False
+    )
+
+    schedule: Mapped["ClassSchedule"] = relationship(
+    back_populates="attendance_sessions"
+    )
+
+    attendance_records: Mapped[list["AttendanceRecord"]] = relationship(
+        back_populates="session"
     )

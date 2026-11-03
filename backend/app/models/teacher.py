@@ -1,5 +1,5 @@
 from sqlalchemy import String, ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.base import Base
 
@@ -29,4 +29,16 @@ class Teacher(Base):
 
     designation: Mapped[str | None] = mapped_column(
         String(100), nullable=True
+    )
+
+    user: Mapped["User"] = relationship(
+    back_populates="teacher"
+    )
+
+    department: Mapped["Department | None"] = relationship(
+        back_populates="teachers"
+    )
+
+    assignments: Mapped[list["TeacherAssignment"]] = relationship(
+        back_populates="teacher"
     )

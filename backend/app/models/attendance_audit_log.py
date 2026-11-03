@@ -7,7 +7,7 @@ from sqlalchemy import (
     CheckConstraint,
     func
 )
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.base import Base
 
@@ -54,4 +54,13 @@ class AttendanceAuditLog(Base):
 
     reason: Mapped[str | None] = mapped_column(
         String(500), nullable=True
+    )
+
+    attendance_record: Mapped["AttendanceRecord"] = relationship(
+    back_populates="audit_logs"
+    )
+
+    changed_by_user: Mapped["User"] = relationship(
+        back_populates="attendance_changes",
+        foreign_keys=[changed_by]
     )

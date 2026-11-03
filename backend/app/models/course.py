@@ -1,5 +1,5 @@
 from sqlalchemy import String, ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.base import Base
 
@@ -28,4 +28,12 @@ class Course(Base):
 
     description: Mapped[str | None] = mapped_column(
         String(500), nullable=True
+    )
+
+    department: Mapped["Department"] = relationship(
+    back_populates="courses"
+    )
+
+    course_offerings: Mapped[list["CourseOffering"]] = relationship(
+        back_populates="course"
     )

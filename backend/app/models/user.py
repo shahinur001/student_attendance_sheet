@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy import String, Boolean, DateTime, CheckConstraint, func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.base import Base
 
@@ -44,4 +44,19 @@ class User(Base):
         server_default=func.now(),
         onupdate=func.now(),
         nullable=False
+    )
+
+    teacher: Mapped["Teacher"] = relationship(
+        back_populates="user",
+        uselist=False
+    )
+
+    student: Mapped["Student"] = relationship(
+    back_populates="user",
+    uselist=False
+    )
+
+    attendance_changes: Mapped[list["AttendanceAuditLog"]] = relationship(
+    back_populates="changed_by_user",
+    foreign_keys="AttendanceAuditLog.changed_by"
     )

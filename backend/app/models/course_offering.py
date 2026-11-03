@@ -3,7 +3,7 @@ from sqlalchemy import (
     ForeignKey, 
     UniqueConstraint
 ) 
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.base import Base
 
@@ -33,4 +33,24 @@ class CourseOffering(Base):
 
     section: Mapped[str] = mapped_column(
         String(20), nullable=False, default="A"
+    )
+
+    course: Mapped["Course"] = relationship(
+    back_populates="course_offerings"
+    )
+
+    academic_term: Mapped["AcademicTerm"] = relationship(
+        back_populates="course_offerings"
+    )
+
+    teacher_assignments: Mapped[list["TeacherAssignment"]] = relationship(
+        back_populates="course_offering"
+    )
+
+    enrollments: Mapped[list["CourseEnrollment"]] = relationship(
+        back_populates="course_offering"
+    )
+
+    schedules: Mapped[list["ClassSchedule"]] = relationship(
+        back_populates="course_offering"
     )

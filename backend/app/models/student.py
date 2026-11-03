@@ -1,5 +1,5 @@
 from sqlalchemy import String, ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.base import Base
 
@@ -30,4 +30,20 @@ class Student(Base):
 
     batch: Mapped[str | None] = mapped_column(
         String(30), nullable=True
+    )
+
+    user: Mapped["User"] = relationship(
+    back_populates="student"
+    )
+
+    department: Mapped["Department | None"] = relationship(
+        back_populates="students"
+    )
+
+    enrollments: Mapped[list["CourseEnrollment"]] = relationship(
+        back_populates="student"
+    )
+
+    attendance_records: Mapped[list["AttendanceRecord"]] = relationship(
+        back_populates="student"
     )

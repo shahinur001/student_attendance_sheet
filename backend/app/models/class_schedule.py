@@ -7,7 +7,7 @@ from sqlalchemy import (
     ForeignKey,
     CheckConstraint
 )
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.base import Base
 
@@ -51,4 +51,16 @@ class ClassSchedule(Base):
 
     room: Mapped[str | None] = mapped_column(
         String(50), nullable=True
+    )
+
+    course_offering: Mapped["CourseOffering"] = relationship(
+    back_populates="schedules"
+    )
+
+    teacher_assignment: Mapped["TeacherAssignment"] = relationship(
+        back_populates="schedules"
+    )
+
+    attendance_sessions: Mapped[list["AttendanceSession"]] = relationship(
+        back_populates="schedule"
     )

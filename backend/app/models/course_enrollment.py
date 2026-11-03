@@ -1,5 +1,5 @@
 from sqlalchemy import ForeignKey, UniqueConstraint
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.base import Base
 
@@ -25,4 +25,12 @@ class CourseEnrollment(Base):
     student_id: Mapped[int] = mapped_column(
         ForeignKey("students.id", ondelete="RESTRICT"),
         nullable=False
+    )
+
+    course_offering: Mapped["CourseOffering"] = relationship(
+        back_populates="enrollments"
+    )
+
+    student: Mapped["Student"] = relationship(
+        back_populates="enrollments"
     )
